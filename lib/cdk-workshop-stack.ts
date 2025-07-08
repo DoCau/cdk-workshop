@@ -7,6 +7,9 @@ import * as path from 'path';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class CdkWorkshopStack extends cdk.Stack {
+  public readonly hcViewerUrl: cdk.CfnOutput;
+  public readonly hcEndpoint: cdk.CfnOutput;
+
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
@@ -20,14 +23,22 @@ export class CdkWorkshopStack extends cdk.Stack {
       downstream: lambda
     });
     
-    new cdk.aws_apigateway.LambdaRestApi(this, "APIEndPoint", {
+    const gateway = new cdk.aws_apigateway.LambdaRestApi(this, "APIEndPoint", {
       handler: hitCounter.handler
     });
 
-    new TableViewer(this, 'DynamoDataTableView', {
+    const tableViewer = new TableViewer(this, 'DynamoDataTableView', {
       title: 'Hits Counter',
       table: hitCounter.table,
       sortBy: "hits"
     });
+
+    this.hcEndpoint = new cdk.CfnOutput(this, 'GatewayUrl', {
+      value: gateway.url
+    });
+
+    // this.hcViewerUrl = new cdk.CfnOutput(this, 'TableViewerUrl', {
+    //   value: tableViewer.endpoint
+    // });
   }
 }
