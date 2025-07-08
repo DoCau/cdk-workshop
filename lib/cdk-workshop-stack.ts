@@ -4,7 +4,6 @@ import { Construct } from 'constructs';
 import { HitCounter } from './hit-counter';
 import { TableViewer } from 'cdk-dynamo-table-viewer';
 import * as path from 'path';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class CdkWorkshopStack extends cdk.Stack {
   public readonly hcViewerUrl: cdk.CfnOutput;
