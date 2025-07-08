@@ -37,8 +37,8 @@ export class CdkWorkshopStack extends cdk.Stack {
       value: gateway.url
     });
 
-    // this.hcViewerUrl = new cdk.CfnOutput(this, 'TableViewerUrl', {
-    //   value: tableViewer.endpoint
-    // });
+    this.hcViewerUrl = new cdk.CfnOutput(this, 'TableViewerUrl', {
+      value: tableViewer.endpoint
+    });
   }
 }
